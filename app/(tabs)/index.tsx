@@ -1,7 +1,8 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
-import { FlatList } from 'react-native'
+import { FlatList, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useState } from 'react'
 
 export default function HomeScreen() {
   type TodoItem = {
@@ -10,7 +11,7 @@ export default function HomeScreen() {
     completed: boolean
   }
 
-  const todoList: TodoItem[] = [
+  const [todos, setTodos] = useState<TodoItem[]>([
     {
       id: 1,
       title: 'Learn React Native',
@@ -25,16 +26,42 @@ export default function HomeScreen() {
       id: 3,
       title: 'Publish the app',
       completed: false
+    },
+    {
+      id: 4,
+      title: 'Share the app',
+      completed: false
     }
-  ]
+  ])
+
+  const toggleCompleted = (id: number) => {
+    setTodos(prevTodos => 
+      prevTodos.map(todo => 
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    )
+  }
 
   return (
     <SafeAreaView className='flex-1'>
       <ThemedView className='flex-1 items-center justify-center'>
         <FlatList
           className='mt-2'
-          data={todoList}
-          renderItem={({ item }) => <ThemedText className='mt-2'>{item.title}</ThemedText>}
+          data={todos}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => toggleCompleted(item.id)}>
+              <ThemedView className='flex-row items-center p-2 gap-3'>
+                <View
+                  className={`w-6 h-6 rounded-full border-2 ${
+                    item.completed ? 'bg-green-500 border-green-500' : 'border-gray-500'
+                  }`}
+                />
+                <ThemedText className={`text-lg ${item.completed ? 'line-through text-gray-600' : ''}`}>
+                  {item.title}
+                </ThemedText>
+              </ThemedView>
+            </TouchableOpacity>
+          )}
           keyExtractor={(item) => item.id.toString()}
         />
       </ThemedView>
