@@ -1,50 +1,75 @@
-# Welcome to your Expo app 👋
+# Expo TodoList App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+一个使用 Expo、React Native 和 Tailwind CSS 构建的简单美观的待办事项（Todo List）应用。它支持浅色和深色模式，并提供流畅的用户体验。
 
-## Get started
+## ✨ 主要功能
 
-1. Install dependencies
+- **查看任务列表**: 清晰地展示您的所有待办事项。
+- **添加新任务**: 通过一个模态框轻松添加新任务。
+- **标记完成**: 点击即可切换任务的完成状态。
+- **主题切换**: 支持浅色和深色模式，并能根据系统设置自动切换。
+- **流畅动画**: 在添加任务和切换状态时有平滑的动画效果。
 
-   ```bash
-   npm install
-   ```
+## 📸 截图
 
-2. Start the app
+| 浅色模式 | 深色模式 |
+| :---: | :---: |
+| *（此处放置浅色模式截图）* | *（此处放置深色模式截图）* |
 
-   ```bash
-    npx expo start
-   ```
+## 🛠️ 技术栈
 
-In the output, you'll find options to open the app in a
+- **[React Native](https://reactnative.dev/)**: 跨平台应用开发框架。
+- **[Expo](https://expo.dev/)**: 加速 React Native 应用开发的平台和工具集。
+- **[TypeScript](https://www.typescriptlang.org/)**: 为 JavaScript 添加静态类型。
+- **[Tailwind CSS (NativeWind)](https://www.nativewind.dev/)**: 一个工具类优先的 CSS 框架，用于快速构建用户界面。
+- **[Expo Router](https://docs.expo.dev/router/introduction/)**: 用于 React Native 和 Web 的文件系统路由。
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🚀 快速开始
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+请按照以下步骤在本地运行项目：
 
-## Get a fresh project
-
-When you're ready, run:
-
+**1. 克隆仓库**
 ```bash
-npm run reset-project
+git clone https://github.com/your-username/expo-todolist.git
+cd expo-todolist
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+**2. 安装依赖**
 
-## Learn more
+推荐使用 `yarn`：
+```bash
+yarn install
+```
+或者使用 `npm`：
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+**3. 启动应用**
+```bash
+yarn expo start
+```
+或者
+```bash
+npx expo start
+```
+然后，在您的手机上使用 Expo Go 应用扫描二维码，或者在模拟器中运行。
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 📁 项目结构
 
-## Join the community
+```
+expo-todolist/
+├── app/              # Expo Router 路由和页面
+│   ├── (tabs)/       # 标签页布局和屏幕
+│   └── _layout.tsx   # 全局布局
+├── assets/           # 字体、图片等静态资源
+├── components/       # 可重用的 React 组件
+├── constants/        # 应用常量（如颜色）
+├── hooks/            # 自定义 Hooks
+├── package.json      # 项目依赖和脚本
+└── tailwind.config.js # Tailwind CSS 配置文件
+```
 
-Join our community of developers creating universal apps.
+## 🤝 贡献
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+欢迎提交 Pull Request 或 Issue 来为这个项目做出贡献！
