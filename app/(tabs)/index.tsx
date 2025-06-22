@@ -35,15 +35,13 @@ export default function HomeScreen() {
   ])
 
   const toggleCompleted = (id: number) => {
-    setTodos(prevTodos => 
-      prevTodos.map(todo => 
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo))
     )
   }
 
   return (
-    <SafeAreaView className='flex-1'>
+    <SafeAreaView className='flex-1 bg-white'>
       <ThemedView className='flex-1 items-center justify-center'>
         <FlatList
           className='mt-2'
@@ -56,7 +54,9 @@ export default function HomeScreen() {
                     item.completed ? 'bg-green-500 border-green-500' : 'border-gray-500'
                   }`}
                 />
-                <ThemedText className={`text-lg ${item.completed ? 'line-through text-gray-600' : ''}`}>
+                <ThemedText
+                  className={`text-lg ${item.completed ? 'line-through text-gray-600' : ''}`}
+                >
                   {item.title}
                 </ThemedText>
               </ThemedView>
