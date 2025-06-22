@@ -1,8 +1,9 @@
 import { ThemedText } from '@/components/ThemedText'
 import { ThemedView } from '@/components/ThemedView'
-import { FlatList, TouchableOpacity, View } from 'react-native'
+import { FlatList, TouchableOpacity, View, Modal, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRef, useState } from 'react'
+import { useThemeColor } from '@/hooks/useThemeColor'
 
 export default function HomeScreen() {
   type TodoItem = {
@@ -10,6 +11,8 @@ export default function HomeScreen() {
     title: string
     completed: boolean
   }
+
+  const TextColor = useThemeColor({ light: 'black', dark: 'white' }, 'text')
 
   const flatListRef = useRef<FlatList<TodoItem>>(null)
 
@@ -35,6 +38,8 @@ export default function HomeScreen() {
       completed: false
     }
   ])
+  const [modalVisible, setModalVisible] = useState(false)
+  const [newTodoTitle, setNewTodoTitle] = useState('')
 
   const toggleCompleted = (id: number) => {
     setTodos((prevTodos) =>
@@ -42,16 +47,22 @@ export default function HomeScreen() {
     )
   }
 
-  const addTodo = () => {
-    setTodos((prevTodos) => {
-      const newTodos = {
-        id: prevTodos.length + 1,
-        title: 'New Todo',
-        completed: false
-      }
-      return [...prevTodos, newTodos]
-    })
-    flatListRef.current?.scrollToIndex({ index: todos.length - 1, animated: true })
+  const handleAddTodo = () => {
+    if (newTodoTitle.trim()) {
+      setTodos((prevTodos) => {
+        const newTodo = {
+          id: new Date().getTime(),
+          title: newTodoTitle.trim(),
+          completed: false
+        }
+        return [...prevTodos, newTodo]
+      })
+      setNewTodoTitle('')
+      setModalVisible(false)
+      setTimeout(() => {
+        flatListRef.current?.scrollToEnd({ animated: true })
+      }, 100)
+    }
   }
 
   return (
@@ -85,7 +96,7 @@ export default function HomeScreen() {
           {/* 添加按钮 */}
           <View className='absolute' style={{ bottom: 60, right: 20 }}>
             <TouchableOpacity
-              onPress={addTodo}
+              onPress={() => setModalVisible(true)}
               style={{
                 shadowColor: '#000',
                 shadowOffset: {
@@ -118,6 +129,45 @@ export default function HomeScreen() {
           </View>
         </View>
       </SafeAreaView>
+
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible)
+        }}
+      >
+        <ThemedView
+          lightColor='rgba(0, 0, 0, 0.4)'
+          darkColor='rgba(0, 0, 0, 0.4)'
+          className='flex-1 justify-center items-center'
+        >
+          <ThemedView
+            darkColor='#333'
+            // style={{ borderWidth: 1, borderColor: '#111' }}
+            className='p-6 rounded-lg w-80'
+          >
+            <ThemedText className='text-lg font-bold mb-4'>Add New Todo</ThemedText>
+            <TextInput
+              style={{ color: TextColor }}
+              className='border border-gray-300 p-2 rounded-md mb-4'
+              placeholder='Enter todo title'
+              value={newTodoTitle}
+              onChangeText={setNewTodoTitle}
+              autoFocus={true}
+            />
+            <View className='flex-row justify-end'>
+              <TouchableOpacity onPress={() => setModalVisible(false)} className='mr-4'>
+                <ThemedText className='text-gray-500'>Cancel</ThemedText>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleAddTodo}>
+                <ThemedText className='text-indigo-600 font-bold'>Add</ThemedText>
+              </TouchableOpacity>
+            </View>
+          </ThemedView>
+        </ThemedView>
+      </Modal>
     </ThemedView>
   )
 }
