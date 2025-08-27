@@ -30,8 +30,10 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false , title: '首页'}} />
+        <Stack.Screen name="list" options={{ headerShown: true, title: '列表'}} />
+        <Stack.Screen name="details" options={{ headerShown: true, title: '详情'}} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
